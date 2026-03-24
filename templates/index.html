@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensagens Temporárias - Teste Interativo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📱 Mensagens Temporárias</h1>
+            <p class="subtitle">Veja a mensagem desaparecer após o tempo definido</p>
+        </header>
+
+        <main>
+            <!-- Seção de Entrada -->
+            <section class="input-section">
+                <h2>Enviar Mensagem Temporária</h2>
+                <form id="messageForm">
+                    <div class="form-group">
+                        <label for="sender">Remetente:</label>
+                        <input type="text" id="sender" name="sender" value="Alice" placeholder="Seu nome">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipient">Destinatário:</label>
+                        <input type="text" id="recipient" name="recipient" value="Bob" placeholder="Nome do destinatário">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content">Mensagem:</label>
+                        <textarea id="content" name="content" placeholder="Digite sua mensagem aqui..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expires_in_seconds">Tempo de Expiração (segundos):</label>
+                        <input type="number" id="expires_in_seconds" name="expires_in_seconds" value="10" min="1" max="120">
+                        <small>Para teste rápido, use 5-15 segundos. Para teste real, use 86400 (24 horas)</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                </form>
+            </section>
+
+            <!-- Seção de Mensagens -->
+            <section class="messages-section">
+                <h2>Mensagens Ativas</h2>
+                <div id="messagesContainer" class="messages-container">
+                    <p class="empty-state">Nenhuma mensagem ativa. Envie uma acima!</p>
+                </div>
+            </section>
+
+            <!-- Seção de Status do Teste -->
+            <section class="test-status-section">
+                <h2>📊 Status do Teste</h2>
+                <div class="test-status">
+                    <div class="status-item">
+                        <span class="status-label">Mensagens Enviadas:</span>
+                        <span id="sentCount" class="status-value">0</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Mensagens Expiradas:</span>
+                        <span id="expiredCount" class="status-value">0</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Taxa de Sucesso:</span>
+                        <span id="successRate" class="status-value">0%</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Este é um exercício de teste automatizado para a funcionalidade de mensagens que desaparecem após 24 horas.</p>
+            <p>Os testes podem ser validados via Pytest no terminal.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
