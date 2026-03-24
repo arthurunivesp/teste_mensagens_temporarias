@@ -15,7 +15,7 @@ def client():
 def test_index_page(client):
     rv = client.get("/")
     assert rv.status_code == 200
-    assert b"Mensagens Temporarias" in rv.data
+    assert "Mensagens Tempor\xe1rias".encode("utf-8") in rv.data
 
 def test_create_message(client):
     data = {

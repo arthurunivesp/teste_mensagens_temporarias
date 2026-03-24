@@ -53,7 +53,7 @@
 
             <!-- Seção de Status do Teste -->
             <section class="test-status-section">
-                <h2>📊 Status do Teste</h2>
+                <h2>📊 Status do Teste (Frontend)</h2>
                 <div class="test-status">
                     <div class="status-item">
                         <span class="status-label">Mensagens Enviadas:</span>
@@ -67,6 +67,22 @@
                         <span class="status-label">Taxa de Sucesso:</span>
                         <span id="successRate" class="status-value">0%</span>
                     </div>
+                </div>
+            </section>
+
+            <!-- Seção de Terminal Backend -->
+            <section class="terminal-section">
+                <div class="terminal-header">
+                    <h2>🐍 Terminal de Testes Backend (Pytest)</h2>
+                    <button id="runTestsBtn" class="btn btn-secondary">Executar Pytest</button>
+                </div>
+                <div class="terminal-container">
+                    <div id="terminalOutput" class="terminal-output">
+                        <span class="terminal-prompt">ubuntu@api-server:~$</span> Aguardando execução dos testes...
+                    </div>
+                </div>
+                <div class="terminal-footer">
+                    <small>Este terminal executa o arquivo <code>test_api.py</code> diretamente no servidor via Python.</small>
                 </div>
             </section>
         </main>

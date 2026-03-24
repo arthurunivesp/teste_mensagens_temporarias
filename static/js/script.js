@@ -1,3 +1,6 @@
+// Configuração da API
+const API_BASE_URL = 'https://5000-i1cgvle8sn8gozm653cp3-a2a545ba.us1.manus.computer';
+
 // Estado da aplicação
 const appState = {
     sentCount: 0,
@@ -12,9 +15,12 @@ const messagesContainer = document.getElementById('messagesContainer');
 const sentCountEl = document.getElementById('sentCount');
 const expiredCountEl = document.getElementById('expiredCount');
 const successRateEl = document.getElementById('successRate');
+const runTestsBtn = document.getElementById('runTestsBtn');
+const terminalOutput = document.getElementById('terminalOutput');
 
 // Event Listeners
 messageForm.addEventListener('submit', handleFormSubmit);
+runTestsBtn.addEventListener('click', runBackendTests);
 
 // Função para enviar mensagem
 async function handleFormSubmit(e) {
@@ -26,7 +32,7 @@ async function handleFormSubmit(e) {
     const expires_in_seconds = parseInt(document.getElementById('expires_in_seconds').value);
 
     try {
-        const response = await fetch('/api/messages', {
+        const response = await fetch(`${API_BASE_URL}/api/messages`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -52,6 +58,9 @@ async function handleFormSubmit(e) {
         // Atualizar estatísticas
         appState.sentCount++;
         updateStats();
+
+        // Disparar testes backend automaticamente ao enviar
+        runBackendTests();
 
         // Limpar formulário
         messageForm.reset();
@@ -177,6 +186,9 @@ function expireMessage(messageId) {
         // Atualizar estatísticas
         appState.expiredCount++;
         updateStats();
+
+        // Disparar testes backend automaticamente ao expirar
+        runBackendTests();
     }
 }
 
@@ -197,6 +209,55 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+}
+
+// Função para executar testes backend
+async function runBackendTests() {
+    // Se já estiver executando, não dispara outro
+    if (runTestsBtn.disabled) return;
+
+    runTestsBtn.disabled = true;
+    runTestsBtn.textContent = 'Executando...';
+    
+    terminalOutput.innerHTML = '<span class="terminal-prompt">ubuntu@api-server:~$</span> <span class="terminal-info">Iniciando Pytest no backend...</span>\n';
+    
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/run-tests`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        
+        // Verifica se a resposta é JSON antes de tentar parsear
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+            const data = await response.json();
+            
+            if (data.success) {
+                terminalOutput.innerHTML += `<span class="terminal-success">${escapeHtml(data.output)}</span>`;
+                terminalOutput.innerHTML += '\n<span class="terminal-prompt">ubuntu@api-server:~$</span> <span class="terminal-success">Testes concluídos com sucesso!</span>';
+            } else {
+                terminalOutput.innerHTML += `<span class="terminal-error">${escapeHtml(data.output || data.error)}</span>`;
+                terminalOutput.innerHTML += '\n<span class="terminal-prompt">ubuntu@api-server:~$</span> <span class="terminal-error">Falha nos testes. Verifique a saída acima.</span>';
+            }
+        } else {
+            const text = await response.text();
+            if (response.status === 404) {
+                terminalOutput.innerHTML += `<span class="terminal-error">Erro 404: O endpoint de testes não foi encontrado. Reiniciando o servidor...</span>`;
+            } else {
+                terminalOutput.innerHTML += `<span class="terminal-error">Erro do Servidor (${response.status}): ${escapeHtml(text.substring(0, 100))}...</span>`;
+            }
+        }
+    } catch (error) {
+        terminalOutput.innerHTML += `<span class="terminal-error">Erro de conexão: ${error.message}</span>`;
+    } finally {
+        runTestsBtn.disabled = false;
+        runTestsBtn.textContent = 'Executar Pytest';
+        // Scroll para o final do terminal
+        const container = terminalOutput.parentElement;
+        container.scrollTop = container.scrollHeight;
+    }
 }
 
 // Inicializar
