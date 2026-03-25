@@ -17,10 +17,15 @@ const expiredCountEl = document.getElementById('expiredCount');
 const successRateEl = document.getElementById('successRate');
 const runTestsBtn = document.getElementById('runTestsBtn');
 const terminalOutput = document.getElementById('terminalOutput');
+const themeToggleBtn = document.getElementById('themeToggle');
 
 // Event Listeners
 messageForm.addEventListener('submit', handleFormSubmit);
 runTestsBtn.addEventListener('click', runBackendTests);
+if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+
+// Init
+initTheme();
 
 // Função para enviar mensagem
 async function handleFormSubmit(e) {
@@ -209,6 +214,32 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+}
+
+function setTheme(theme) {
+    const body = document.body;
+    if (theme === 'light') {
+        body.classList.add('theme-light');
+        themeToggleBtn.textContent = '🌙 Modo Escuro';
+    } else {
+        body.classList.remove('theme-light');
+        themeToggleBtn.textContent = '🌞 Modo Claro';
+    }
+    localStorage.setItem('theme', theme);
+}
+
+function toggleTheme() {
+    const currentTheme = document.body.classList.contains('theme-light') ? 'light' : 'dark';
+    setTheme(currentTheme === 'light' ? 'dark' : 'light');
+}
+
+function initTheme() {
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme === 'light') {
+        setTheme('light');
+    } else {
+        setTheme('dark');
+    }
 }
 
 // Função para executar testes backend

@@ -5,24 +5,79 @@
 }
 
 :root {
-    --primary-color: #6366f1;
-    --secondary-color: #ec4899;
-    --success-color: #10b981;
-    --danger-color: #ef4444;
-    --warning-color: #f59e0b;
-    --dark-bg: #0f172a;
-    --light-bg: #f8fafc;
-    --border-color: #e2e8f0;
-    --text-dark: #1e293b;
-    --text-light: #64748b;
+    --primary-color: #E1306C;
+    --secondary-color: #833AB4;
+    --accent-color: #F77737;
+    --success-color: #33A532;
+    --danger-color: #D93025;
+    --warning-color: #F4B400;
+    --dark-bg: #0C0C0C;
+    --medium-bg: #1C1C1C;
+    --light-bg: #FAFAFA;
+    --surface-bg: #1E1E1E;
+    --border-color: #333333;
+    --text-dark: #FFFFFF;
+    --text-light: #B0B0B0;
+    --font-primary: 'Nunito Sans', 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, var(--dark-bg) 0%, #1e293b 100%);
+    font-family: var(--font-primary);
+    background: radial-gradient(circle at 30% 30%, #FDF497 0%, #F7761E 15%, #D62976 50%, #962FBF 75%, #4F5BD5 100%);
     color: var(--text-dark);
     min-height: 100vh;
     padding: 20px;
+}
+
+body.theme-light {
+    background: linear-gradient(120deg, #FFEEF6 0%, #FFE4FF 45%, #E6F8FF 100%);
+    color: #1a1a1a;
+}
+
+body.theme-light section {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(200, 200, 200, 0.45);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+body.theme-light header h1 {
+    color: #2f2f2f;
+    -webkit-text-fill-color: initial;
+    background: none;
+}
+
+body.theme-light header .subtitle,
+body.theme-light footer,
+body.theme-light .form-group label,
+body.theme-light .message-card,
+body.theme-light .status-label,
+body.theme-light .status-value {
+    color: #2c2c2c;
+}
+
+body.theme-light .btn-primary {
+    background: linear-gradient(135deg, #FF7759 0%, #DB2876 100%);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+body.theme-light .btn-secondary {
+    background: rgba(255, 255, 255, 0.95);
+    color: #2a2a2a;
+    border: 1px solid rgba(220, 220, 220, 0.85);
+}
+
+body.theme-light .form-group input,
+body.theme-light .form-group textarea {
+    background: #ffffff;
+    color: #111;
+    border: 1px solid #ccc;
+}
+
+body.theme-light .message-card {
+    border-left-color: #DB2876;
+    background: #ffffff;
+    color: #1a1a1a;
 }
 
 .container {
@@ -40,15 +95,37 @@ header {
 header h1 {
     font-size: 2.5rem;
     margin-bottom: 10px;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: white;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+    background: none;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: initial;
+    background-clip: initial;
+}
+
+header h1::first-letter {
+    font-size: 1.05em;
 }
 
 header .subtitle {
     font-size: 1.1rem;
-    color: var(--text-light);
+    color: #EDEDED;
+}
+
+header h1 .icon {
+    display: inline-block;
+    margin-right: 0.3rem;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.85));
+}
+
+
+section {
+    background: rgba(10, 10, 10, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.6s ease-out;
 }
 
 main {
@@ -58,11 +135,12 @@ main {
     margin-bottom: 40px;
 }
 
-section {
-    background: white;
+body.theme-light section {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(200, 200, 200, 0.45);
     border-radius: 12px;
     padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     animation: fadeIn 0.6s ease-out;
 }
 
@@ -87,25 +165,49 @@ section h2 {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
-    color: var(--text-dark);
+    color: #EFEFEF;
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
     padding: 12px;
-    border: 2px solid var(--border-color);
-    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 10px;
     font-size: 1rem;
     font-family: inherit;
+    background: rgba(0, 0, 0, 0.34);
+    color: #F7F7F7;
     transition: all 0.3s ease;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+body.theme-light .form-group label {
+    color: #2c2c2c;
+}
+
+body.theme-light .form-group input,
+body.theme-light .form-group textarea {
+    background: #ffffff;
+    color: #111;
+    border: 1px solid #ccc;
+}
+
+body.theme-light .form-group input::placeholder,
+body.theme-light .form-group textarea::placeholder {
+    color: #606060;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    border-color: #E1306C;
+    box-shadow: 0 0 0 3px rgba(225, 56, 106, 0.2);
+    background: rgba(255,255,255,0.14);
 }
 
 .form-group textarea {
@@ -132,17 +234,29 @@ section h2 {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, #F77737 0%, #E1306C 45%, #833AB4 100%);
     color: white;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 10px 20px rgba(225, 56, 106, 0.45);
 }
 
 .btn-primary:active {
     transform: translateY(0);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.22);
 }
 
 /* Seção de Mensagens */
@@ -182,18 +296,26 @@ section h2 {
 }
 
 .message-card {
-    background: linear-gradient(135deg, #f0f4ff 0%, #fef3f8 100%);
-    border-left: 4px solid var(--primary-color);
+    background: rgba(0, 0, 0, 0.35);
+    border-left: 4px solid #E1306C;
     padding: 15px;
-    border-radius: 8px;
+    border-radius: 10px;
     animation: slideIn 0.4s ease-out;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    color: #FFF;
+}
+
+body.theme-light .message-card {
+    border-left-color: #DB2876;
+    background: #ffffff;
+    color: #1a1a1a;
 }
 
 .message-card.expiring {
-    border-left-color: var(--warning-color);
-    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border-left-color: #F4B400;
+    background: rgba(255, 218, 94, 0.12);
 }
 
 .message-card.expired {
